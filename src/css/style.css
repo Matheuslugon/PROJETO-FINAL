@@ -1,0 +1,291 @@
+* {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+body{
+  background-color: #f0f0f0;
+  font-family: system-ui;
+  background-image: url(../img/map.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+  text-align: -webkit-center;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+    
+
+}
+@media screen and (max-width: 600px) {
+  body {
+    background-image:none;
+    background-color: #ccc;
+  }
+  
+}
+
+.form{ 
+  margin: 20px;
+}
+
+.card {
+    box-shadow: 1px 1px 5px;
+    padding: 20px;
+    border-radius: 5px;
+    background-color: #f1fff9;
+    width: 400px;
+}
+
+
+  @media screen and (max-width: 480px) {
+    .card {
+      background-color: #f1fff9;
+      width: 75%;
+      padding: 41px;
+      
+    }
+
+
+
+  }
+.card-top{
+    text-align: center;
+}
+
+.card-group {
+    margin-bottom: 10px;
+}
+
+.card-group > label {
+    width: 100%;
+    color: rgb(65, 66, 68);
+    display: -webkit-box;
+  }
+
+.card-group > input{
+  border-radius: 5px;
+  BORDER: 1px solid #9e9999;
+  width: 100%;
+  height: 30px;
+  padding: 5px;
+  background-color: rgb(255 255 255);
+  box-sizing: border-box;
+  font-family: system-ui;
+  color: #777575;
+
+}
+
+.card-group> button{
+    position: relative;
+    display: block;
+    padding: 10px 20px;
+    color: #145a54;
+    font-size: 16px;
+    text-decoration: none;
+    text-transform: uppercase;
+    overflow: hidden;
+    transition: .5s;
+    margin-top: 40px;
+    letter-spacing: 4px;
+    border: none;
+    background-color: transparent;
+    margin: 0 auto;
+    cursor: pointer;
+    margin-block-start: 1.83em;
+    
+}
+
+.card-group> button:hover{
+    background: #145a54;
+    color: #fff;
+    border-radius: 5px;
+
+}
+
+.card-group> button span {
+    position: absolute;
+    display: block;
+  }
+  
+  .card-group> button span:nth-child(1) {
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #145a54);
+    animation: btn-anim1 1s linear infinite;
+  }
+  
+  @keyframes btn-anim1 {
+    0% {
+      left: -100%;
+    }
+   50%,100% {
+      left: 100%;
+    }
+  }
+  
+  .card-group> button span:nth-child(2) {
+    top: -100%;
+    right: 0;
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(180deg, transparent, #145a54);
+    animation: btn-anim2 1s linear infinite;
+    animation-delay: .25s
+  }
+  
+  @keyframes btn-anim2 {
+    0% {
+      top: -100%;
+    }
+    50%,100% {
+      top: 100%;
+    }
+  }
+  
+  .card-group> button span:nth-child(3) {
+    bottom: 0;
+    right: -100%;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(270deg, transparent, #145a54);
+    animation: btn-anim3 1s linear infinite;
+    animation-delay: .5s
+  }
+  
+  @keyframes btn-anim3 {
+    0% {
+      right: -100%;
+    }
+    50%,100% {
+      right: 100%;
+    }
+  }
+  
+  .card-group> button span:nth-child(4) {
+    bottom: -100%;
+    left: 0;
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(360deg, transparent,#145a54);
+    animation: btn-anim4 1s linear infinite;
+    animation-delay: .75s
+  }
+  
+  @keyframes btn-anim4 {
+    0% {
+      bottom: -100%;
+    }
+    50%,100% {
+      bottom: 100%;
+    }
+  }
+  
+
+.imglogin{
+    border-radius: 38px;
+    width: 70px;
+    box-shadow: 0px 0px 5px #ccc;
+
+}
+
+.title{
+    color: rgb(25 45 51);;
+}
+
+.descricao{
+    color: rgb(63, 87, 112);
+}
+
+
+.links > a { 
+    color: #164333 !important;
+    text-decoration: unset;
+    cursor: pointer
+}
+
+ 
+
+
+/* ==================== AUT_.HTML =====================   */
+
+
+.bloco-validacao > input {
+  width: 50%;
+  text-align: center;
+}
+
+.bloco-validacao > label {
+  width: 100%;
+  color: rgb(65, 66, 68);
+  display: block;
+  margin: 15px 0px 15px 0px;
+  
+}
+
+.descricao-validacao{
+  margin: 12px 0px 35px 0px;
+
+}
+
+/* BUTTON "CONTINUE" AUT_*/
+
+.cta {
+  border: none;
+  background: none;
+ }
+ 
+ .cta span {
+  padding-bottom: 7px;
+  letter-spacing: 4px;
+  font-size: 10px;
+  padding-right: 15px;
+  text-transform: uppercase;
+ }
+ 
+ .cta svg {
+  transform: translateX(-8px);
+  transition: all 0.3s ease;
+ }
+ 
+ .cta:hover svg {
+  transform: translateX(0);
+ }
+ 
+ .cta:active svg {
+  transform: scale(0.9);
+ }
+ 
+ .hover-underline-animation {
+  position: relative;
+  color: black;
+  padding-bottom: 20px;
+ }
+ 
+ .hover-underline-animation:after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  transform: scaleX(0);
+  height: 1.5px;
+  bottom: 0;
+  left: 0;
+  background-color: #000000;
+  transform-origin: bottom right;
+  transition: transform 0.25s ease-out;
+ }
+ 
+ .cta:hover .hover-underline-animation:after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+ }
+
+ 

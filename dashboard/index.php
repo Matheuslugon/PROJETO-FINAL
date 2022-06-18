@@ -5,8 +5,6 @@
         // session_unset();
 ?>
 
-VOCE ESTA LOGADO PIRANHA!!!
-
 <?php 
     }else{
         session_unset();

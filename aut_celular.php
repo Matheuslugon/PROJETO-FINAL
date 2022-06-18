@@ -15,7 +15,7 @@
          <div class="card-top">
             <img class="imglogin" src="img/images.png" alt="">
              <h2 class="title"></h2>
-             <p class="descricao-validacao"></p>
+             <p class="descricao-validacao"> Autentificação dois fatores</p>
             </div> 
 
         <div class="card-group bloco-validacao cpf">

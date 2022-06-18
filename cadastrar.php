@@ -21,8 +21,11 @@
         <form class="form" method="POST" action="./src/controllers/CreateUser.php">
             <div class="card">
                 <div class="card-top">
-                    <img class="imglogin" src="./src/img/images.png" alt="">
-                    <h2 class="title2"> Cadastro</h2>   
+                    <a href="/telecall" class="back-button">Voltar</a>
+                    <div class="card-content">
+                        <img class="imglogin" src="./src/img/images.png" alt="">
+                        <h2 class="title2"> Cadastro</h2>
+                    </div>
                 </div> 
 
                 <div class="card-group">
@@ -42,7 +45,7 @@
                     
                 <div class="card-group">
                     <label>CPF</label>
-                    <input id="cpfcnpj" name="cpfcnpj" maxlength="15" placeholder="Digite seu CPF" type="text" required onkeyup="mascara_cpf()"/>
+                    <input id="cpf" name="cpf" maxlength="14" onkeypress="formatar_cpf(this, cpf)" placeholder="Digite seu CPF" type="text" required/>
                 </div> 
 
                 <div class="card-group">

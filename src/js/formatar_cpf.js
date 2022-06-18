@@ -1,11 +1,10 @@
- function mascara_cpf(value) {
-    const cnpjCpf = value.replace(/\D/g, '');
-  
-  if (cnpjCpf.length === 15) {
-    return cnpjCpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/g, "\$1.\$2.\$3-\$4");
-  } 
-  
-  return cnpjCpf.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/g, "\$1.\$2.\$3/\$4-\$5");
-
- }
- 
+function formatar_cpf(v){
+  if(v.value.length <= 14){
+    v.value=v.value.replace(/\D/g,"")                    //Remove tudo o que não é dígito
+    v.value=v.value.replace(/(\d{3})(\d)/,"$1.$2")       //Coloca um ponto entre o terceiro e o quarto dígitos
+    v.value=v.value.replace(/(\d{3})(\d)/,"$1.$2")       //Coloca um ponto entre o terceiro e o quarto dígitos
+    v.value=v.value.replace(/(\d{3})(\d{1,2})$/,"$1-$2") //Coloca um hífen entre o terceiro e o quarto dígitos
+     
+    return v
+  }
+}

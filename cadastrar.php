@@ -1,10 +1,3 @@
-<?php 
-    if(isset($_GET['error']) && $_GET['error'] == 400){
-        echo "Dados incompletos";
-    }
-
-?>
-
 <!DOCTYPE html> 
     <html lang="pt-br">
     <head>

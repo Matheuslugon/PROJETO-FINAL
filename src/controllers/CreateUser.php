@@ -2,6 +2,7 @@
 
     include "../database/connect.php";
     include "../entities/user.php";
+    include "../helpers/formatar_cpf_cnpj.php";
 
     if(
         !empty($_POST['nome'])            && $_POST['nome'] != ""         &&
@@ -20,7 +21,7 @@
             "nome"            => $_POST['nome'],
             "nome_materno"    => $_POST['nome_materno'],
             "data"            => $_POST['data'],
-            "cpf"             => $_POST['cpf'],
+            "cpf"             => formatar_cpf_cnpj($_POST['cpf']),
             "celular"         => $_POST['celular'],
             "telefone"        => $_POST['telefone'],
             "endereco"        => $_POST['endereco'],

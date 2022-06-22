@@ -1,3 +1,17 @@
+<?php
+
+    include "./src/includes/header.php";
+    include "./src/database/connect.php";
+    include "./src/controllers/UserController.php";
+
+    if($_POST){
+        $db = new DB();
+        $userController = new UserController($db);
+        $auth = $userController->createUser($_POST);
+        $db->conn->close();
+    }
+?>
+
 <!DOCTYPE html> 
     <html lang="pt-br">
     <head>
@@ -7,11 +21,12 @@
         <title> acesso</title>
         <link rel="stylesheet" href="./src/css/style.css">
         <script src="./src/js/formatar_cpf.js"></script>
+        <script src="./src/js/main.js"></script>
     </head>
 
     <body> 
         
-        <form class="form" method="POST" action="./src/controllers/CreateUser.php">
+        <form class="form" method="POST" action="./cadastrar.php">
             <div class="card">
                 <div class="card-top">
                     <a href="/telecall" class="back-button">Voltar</a>

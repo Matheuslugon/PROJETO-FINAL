@@ -1,3 +1,27 @@
+<?php
+
+
+    include "./src/includes/header.php";
+    include "./src/database/connect.php";
+    include "./src/controllers/AuthController.php";
+    
+    if($_POST){
+        $db = new DB();
+        $authController = new AuthController($db);
+        $auth = $authController->autenticateUser($_POST);
+        $db->conn->close();
+    }
+
+    session_start();
+
+    if(array_key_exists('isAuth', $_SESSION)){
+        return header('Location: ./dashboard/index.php');
+    }
+
+    include "./src/includes/alerts.php";
+    session_write_close();
+?>
+
 <!DOCTYPE html> 
 <html lang="pt-br">
 <head>
@@ -6,11 +30,12 @@
     <meta http-equiv="X-UA-compatible" content="ie=edge">
     <title>Controle de acesso</title>
     <link rel="stylesheet" href="./src/css/style.css">
+    <script src="./src/js/main.js"></script>
 </head>
 
 
 <body>  
-    <form class="form" method="POST" action="./src/controllers/AuthUser.php">
+    <form class="form" method="POST" action="./index.php">
          <div class="card">
          <div class="card-top">
             <img class="imglogin" src="src/img/images.png" alt="">
@@ -43,11 +68,8 @@
          </div>
 
          <div class="links">
-            <a href="#"><p>Esqueceu sua senha?</p></a>
             <a href="cadastrar.php"><p>Ainda não sou cadastrado</p></a>
          </div>
-
-         
     </form>
 </body>
 </html>

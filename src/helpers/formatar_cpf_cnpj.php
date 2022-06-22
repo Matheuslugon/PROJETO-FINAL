@@ -9,7 +9,7 @@
             
         $docFormulario = substr($doc, 0 ,3) . '.' .
                          substr($doc, 3 ,3) . '.' .                     
-                         substr($doc, 6 ,3) . '.' .  
+                         substr($doc, 6 ,3) . '-' .  
                          substr($doc, 9 ,2) ;
     } else {
         

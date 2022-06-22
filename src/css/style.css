@@ -7,6 +7,25 @@
   vertical-align: baseline;
 }
 
+.alert{
+  width: 300px;
+  padding: 0.5rem;
+  background-color: #ffff;
+  border-radius: 10px;
+  font-weight: bold;
+  box-shadow: 1px 1px 20px #b1b1b1;
+}
+
+.alert.error{
+  background-color: #ff6868;
+  color: #fff;
+}
+
+.alert.success{
+  background-color: #7de16b;
+  color: #fff;
+}
+
 body{
   background-color: #f0f0f0;
   font-family: system-ui;
@@ -20,9 +39,9 @@ body{
   display: flex;
   justify-content: center;
   align-items: center;
-    
-
+  flex-direction: column;
 }
+
 @media screen and (max-width: 600px) {
   body {
     background-image:none;

@@ -1,6 +1,7 @@
 <?php
+    $root = realpath($_SERVER["DOCUMENT_ROOT"]);
 
-    include "./src/entities/User.php";
+    require "$root/telecall/src/entities/User.php";
 
     class AuthController{
         
@@ -28,30 +29,22 @@
                     // Busca o email no banco de dados
                     $user = new User($this->db);
                     $resultUser = $user->read(['email' => $userLogin['email']]);
-                    if($resultUser){
-                        session_start();
-                        $_SESSION["error"] = "E-mail já utilizado";
-                        session_write_close();
-                    }
 
                 }catch(Exception $e){
-                    session_start();
                     $_SESSION["error"] = "Erro interno, por favor tente novamente";
                     session_write_close();
                 }
-               
+                
                 // Verifica se existe o usuario e se a senha e igual
-                if($resultUser && password_verify($userLogin['password'], $resultUser['password'])){
+                if(!empty($resultUser) && password_verify($userLogin['password'], $resultUser[0]['password'])){
                     
                     // Inicia uma sessao e redireciona o usuario para o dashboad
-                    session_start();
-                    $_SESSION["verifyUserAuthentication"] = $resultUser['id'];
+                    $_SESSION["verifyUserAuthentication"] = $resultUser[0]['id'];
                     session_write_close();
-
-                    return header('Location: ./autenticacao.php');
+  
+                    return header("Location: ./autenticacao.php");
 
                 }else{
-                    session_start();
                     $_SESSION["error"] = "E-mail ou senha inválidos";
                     session_write_close();
                 }

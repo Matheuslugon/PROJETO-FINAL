@@ -1,13 +1,14 @@
 <?php 
+$root = realpath($_SERVER["DOCUMENT_ROOT"]);
 
-include "./src/entities/AuthenticationType.php";
-include "./src/entities/AccessLogs.php";
+include "$root/telecall/src/entities/AuthenticationType.php";
+include "$root/telecall/src/entities/AccessLogs.php";
+include "$root/telecall/src/entities/User.php";
+include "$root/telecall/src/entities/UserRoles.php";
 
-include "./src/entities/User.php";
-
-include "./src/helpers/valida_cpf.php";
-include "./src/helpers/valida_telefone.php";
-include "./src/helpers/formatar_cpf_cnpj.php";
+include "$root/telecall/src/helpers/valida_cpf.php";
+include "$root/telecall/src/helpers/valida_telefone.php";
+include "$root/telecall/src/helpers/formatar_cpf_cnpj.php";
 
 class TwoFactorVerification{
 
@@ -40,17 +41,17 @@ class TwoFactorVerification{
                 return $method;
 
             }else{
-                $seconds = 1800; // 30 mins
-                $time1 = strtotime($existLogs[0][4]) + $seconds;
+                $seconds = 60; // 30 mins
+                $time1 = strtotime($existLogs[0]['created_at']) + $seconds;
 
                 if(time() >= $time1) {
-                    $accessLogs->update($existLogs[0][0], $userId, 0);
+                    $accessLogs->update($existLogs[0]['id'], $userId, 0);
                     $_SESSION["error"] = "Autenticação expirada";
                     session_destroy();
-                    return header('Location: ./index.php');
+                    return header("Location: ./index.php");
                 }else{
-                    $getMethod = $authenticationType->read($existLogs[0][2]);
-                    $getMethod[0]['log_id'] = $existLogs[0][0];
+                    $getMethod = $authenticationType->read($existLogs[0]['authentication_type_id']);
+                    $getMethod[0]['log_id'] = $existLogs[0]['id'];
                     return $getMethod[0];
                 }
             }
@@ -58,7 +59,7 @@ class TwoFactorVerification{
         }catch(Exception $e){
             $_SESSION["error"] ="Erro ao buscar o tipo de autenticação";
             session_destroy();
-            return header('Location: ./index.php');
+            return header("Location: ./index.php");
         }
     }
 
@@ -72,13 +73,19 @@ class TwoFactorVerification{
             $accessLogs = new AccessLogs($this->db);
 
             $existLogs = $accessLogs->read(['id' => $data['log_id']]);
-            $methodId = $existLogs[0][2];
+            $methodId = $existLogs[0]['authentication_type_id'];
 
             $method = $authenticationType->read($methodId);
             $validationKey = $method[0][1];
 
             $validations = [
-                'CPF' => [
+                'FIRST_THREE_CPF' => [
+                    'DB_KEY' => 'cpf',
+                    'VALIDATION' => function ($value) {
+                        return true;
+                    }
+                ],
+                'LAST_THREE_CPF' => [
                     'DB_KEY' => 'cpf',
                     'VALIDATION' => function ($value) {
                         return true;
@@ -108,20 +115,37 @@ class TwoFactorVerification{
                 $validationObj = $validations[$validationKey];
                 
                 $user = new User($this->db);
-                $user = $user->read(['id' => $id]);
-                $getUserValueByValidation = $user[$validationObj['DB_KEY']];
+                $userRoles = new UserRoles($this->db);
 
-                $formValue = $validationObj['DB_KEY'] == 'cpf' ? formatar_cpf_cnpj($data['value']) : $data['value'];
-                
-                if($validationObj['VALIDATION']($data['value']) && $formValue == $getUserValueByValidation){
-                    $accessLogs->update($existLogs[0][0], $id, 1);
+                $user = $user->read(['id' => $id]);
+                $userRole = $userRoles->read(['user_id' => $id]);
+
+                $getUserValueByValidation = $user[0][$validationObj['DB_KEY']];
+
+                if($validationObj['DB_KEY'] == 'cpf'){
+
+                    $getUserValueByValidation = preg_replace("/[^0-9]/", "", $getUserValueByValidation);
+
+                    if($validationKey == 'FIRST_THREE_CPF'){
+                        $getUserValueByValidation = substr($getUserValueByValidation, 0, 3);
+                    }
+
+                    if($validationKey == 'LAST_THREE_CPF'){
+                        $getUserValueByValidation = substr($getUserValueByValidation, -3);
+                    }
+                }
+
+                if($validationObj['VALIDATION']($data['value']) && $data['value'] == $getUserValueByValidation){
+                    $accessLogs->update($existLogs[0]['id'], $id, 1);
                     session_destroy();
 
                     session_start();
                     $_SESSION["isAuth"] = true;
+                    $_SESSION['id'] = $id;
+                    $_SESSION['role_id'] = $userRole[0]['role_id'];
                     session_write_close();
 
-                    return header('Location: ./dashboard/index.php');
+                    return header("Location: ./dashboard/index.php");
                 }else{
                     $_SESSION["error"] = "Valor incorreto";
                     session_write_close();
@@ -133,7 +157,7 @@ class TwoFactorVerification{
             }
         }else{
             session_destroy();
-            return header('Location: ./index.php');
+            return header("Location: ./index.php");
         }
     }
 }

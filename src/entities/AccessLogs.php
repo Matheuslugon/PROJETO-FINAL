@@ -41,12 +41,12 @@ class AccessLogs {
         }
         
         $result = mysqli_query($this->db->conn, $SQL);
-        if($result) return mysqli_fetch_all($result);
+        if($result) return mysqli_fetch_all($result, MYSQLI_ASSOC);
         return [];
     }
 
     function update($id, $user_id, $logged){
-        $SQL ="UPDATE access_logs SET logged=".$logged.", attempt_at='".date('Y-m-d H:i:s')."' WHERE id=".$id." AND user_id=".$user_id."";
+        $SQL ="UPDATE access_logs SET logged=$logged, attempt_at='".date('Y-m-d H:i:s')."' WHERE id=$id AND user_id=$user_id";
         mysqli_query($this->db->conn, $SQL);
     }
 

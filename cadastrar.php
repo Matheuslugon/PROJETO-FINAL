@@ -1,10 +1,14 @@
 <?php
+    session_start();
+    
+    $root = realpath($_SERVER["DOCUMENT_ROOT"]);
 
-    include "./src/includes/header.php";
-    include "./src/database/connect.php";
-    include "./src/controllers/UserController.php";
+    require "$root/telecall/src/entities/User.php";
+    require "$root/telecall/src/database/connect.php";
+    require "$root/telecall/src/controllers/UserController.php";
 
     if($_POST){
+        
         $db = new DB();
         $userController = new UserController($db);
         $auth = $userController->createUser($_POST);
@@ -14,18 +18,10 @@
 
 <!DOCTYPE html> 
     <html lang="pt-br">
-    <head>
-        <meta charset="UT-8">
-        <meta name="viewport" content="width=device-width, initial-sacale=1.0">
-        <meta http-equiv="X-UA-compatible" content="ie=edge">
-        <title> acesso</title>
-        <link rel="stylesheet" href="./src/css/style.css">
-        <script src="./src/js/formatar_cpf.js"></script>
-        <script src="./src/js/main.js"></script>
-    </head>
+    <?php include "$root/telecall/src/includes/header.php"; ?>
 
-    <body> 
-        
+    <body>
+        <?php include "$root/telecall/src/includes/alerts.php"; ?>
         <form class="form" method="POST" action="./cadastrar.php">
             <div class="card">
                 <div class="card-top">
